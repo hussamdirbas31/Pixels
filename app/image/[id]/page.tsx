@@ -4,10 +4,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { fetchImageById, PixabayImage } from '@/utils/pixabay'
+import { fetchImageById } from '@/utils/pixabay'
 
 interface ImagePageProps {
-  // In page components, params is passed as a Promise<{ id: string }>
   params: Promise<{ id: string }>
 }
 
@@ -99,7 +98,7 @@ export default async function ImagePage({ params }: ImagePageProps) {
         href="/"
         className="mt-8 inline-block text-cyan-400 hover:text-cyan-300 transition-colors"
       >
-        ← Back to home
+        ← Back
       </Link>
     </main>
   )

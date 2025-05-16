@@ -27,7 +27,7 @@ export async function generateMetadata({
         }]
       }
     }
-  } catch (error) {
+  } catch {
     return {
       title: 'Image - PixelCraft',
       description: 'Beautiful image from PixelCraft',
@@ -39,7 +39,7 @@ export default async function ImagePage({ params }: PageProps) {
   let image
   try {
     image = await fetchImageById(params.id)
-  } catch (error) {
+  } catch {
     return (
       <div className="max-w-7xl mx-auto py-12 px-4 text-center">
         <h1 className="text-3xl font-bold text-red-500 mb-4">Error loading image</h1>

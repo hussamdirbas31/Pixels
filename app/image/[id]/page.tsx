@@ -3,12 +3,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-export default async function ImageDetailPage({
-  params,
-}: {
-  params: { id : string }
-}) {
-  const image = await fetchImageById(params.id!)
+interface PageProps {
+  params: {
+    id: string
+  }
+}
+export default async function ImageDetailPage({params}:PageProps) {
+  const image = await fetchImageById(params.id)
   
   if (!image) {
     return notFound()
@@ -119,3 +120,5 @@ export default async function ImageDetailPage({
     </div>
   )
 }
+
+

@@ -12,7 +12,7 @@ export async function generateMetadata({
   const image = await fetchImageById(params.id)
   
   return {
-    title: `${image.tags} - Pinterest Clone`,
+    title: `${image.tags} - PixelCraft`,
     description: `Image by ${image.user} - ${image.tags}`,
     openGraph: {
       images: [{
@@ -35,7 +35,7 @@ export default async function ImagePage({
   return (
     <div className="max-w-7xl mx-auto py-12 px-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="relative rounded-lg overflow-hidden shadow-lg">
+        <div className="relative rounded-xl overflow-hidden shadow-lg border border-slate-700/30">
           <Image
             src={image.largeImageURL}
             alt={image.tags}
@@ -45,27 +45,30 @@ export default async function ImagePage({
           />
         </div>
         
-        <div className="space-y-4">
-          <h1 className="text-3xl font-bold">{image.tags}</h1>
-          <div className="flex items-center gap-2">
+        <div className="space-y-6">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-indigo-500 bg-clip-text text-transparent">
+            {image.tags}
+          </h1>
+          
+          <div className="flex items-center gap-3">
             <Image
               src={image.userImageURL}
               alt={image.user}
-              width={40}
-              height={40}
-              className="rounded-full"
+              width={48}
+              height={48}
+              className="rounded-full border-2 border-cyan-400/50"
             />
-            <p className="text-gray-600">{image.user}</p>
+            <p className="text-slate-300">{image.user}</p>
           </div>
           
-          <div className="flex gap-4">
-            <div className="flex items-center gap-1">
+          <div className="flex gap-6 text-slate-300">
+            <div className="flex items-center gap-2">
               ❤️ {image.likes}
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               👁️ {image.views}
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               ⬇️ {image.downloads}
             </div>
           </div>
@@ -73,7 +76,7 @@ export default async function ImagePage({
           <a
             href={image.largeImageURL}
             download
-            className="inline-flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-400/80 to-indigo-500/80 text-slate-900 px-6 py-3 rounded-xl hover:opacity-90 transition-opacity font-medium"
           >
             <ArrowDownTrayIcon className="w-5 h-5" />
             Download
@@ -81,7 +84,10 @@ export default async function ImagePage({
         </div>
       </div>
       
-      <Link href="/" className="mt-8 inline-block text-blue-500 hover:underline">
+      <Link 
+        href="/" 
+        className="mt-8 inline-block text-cyan-400 hover:text-cyan-300 transition-colors"
+      >
         ← Back to home
       </Link>
     </div>

@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import type { Metadata } from 'next'
 
-
 export async function generateMetadata({
   params,
 }: {
@@ -63,7 +62,7 @@ export default async function ImagePage({
           href="/" 
           className="mt-4 inline-block text-cyan-400 hover:text-cyan-300 transition-colors"
         >
-          ← Back
+          ← Back to home
         </Link>
       </div>
     )

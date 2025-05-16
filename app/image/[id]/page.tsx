@@ -4,11 +4,11 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 export default async function ImageDetailPage({
-  params,
+  params:{id},
 }: {
   params: { id : number }
 }) {
-  const image = await fetchImageById(params.id)
+  const image = await fetchImageById(id)
   
   if (!image) {
     return notFound()

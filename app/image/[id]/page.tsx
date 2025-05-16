@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 export default async function ImageDetailPage({
   params,
 }: {
-  params: { id: string }
+  params: { id: any }
 }) {
   const image = await fetchImageById(params.id)
   

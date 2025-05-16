@@ -1,10 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['pixabay.com'],
-  },
-  experimental: {
-    scrollRestoration: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.pixabay.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'pixabay.com',
+      },
+    ],
   },
 }
 

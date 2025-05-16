@@ -6,17 +6,17 @@ import Link from 'next/link'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import type { Metadata } from 'next'
 
-// Fix: Use proper type for params received from the dynamic route
-type Props = {
-  params: { id: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
+// 1. Declare params (and searchParams) as promises
+export interface PageProps {
+  params: Promise<{ id: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-// Metadata generator for SEO
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+// 2. Await params inside generateMetadata
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const { id } = await props.params  // ⚠️ params is a Promise :contentReference[oaicite:0]{index=0}
   try {
-    const image = await fetchImageById(params.id)
-
+    const image = await fetchImageById(id)
     return {
       title: image?.tags ? `${image.tags} - PixelCraft` : 'Image - PixelCraft',
       description: image?.user ? `Image by ${image.user}` : 'Beautiful image from PixelCraft',
@@ -37,16 +37,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-// Main page component
-export default async function ImagePage({ params }: Props) {
+// 3. Await params inside the async page component
+export default async function ImagePage(props: PageProps) {
+  const { id } = await props.params  // ⚠️ params is a Promise :contentReference[oaicite:1]{index=1}
+
   let image
   try {
-    image = await fetchImageById(params.id)
+    image = await fetchImageById(id)
   } catch {
     return (
       <div className="max-w-7xl mx-auto py-12 px-4 text-center">
         <h1 className="text-3xl font-bold text-red-500 mb-4">Error loading image</h1>
-        <Link href="/" className="mt-4 inline-block text-cyan-400 hover:text-cyan-300 transition-colors">
+        <Link href="/" className="mt-4 inline-block text-cyan-400 hover:text-cyan-300">
           ← Back to home
         </Link>
       </div>
@@ -57,7 +59,7 @@ export default async function ImagePage({ params }: Props) {
     return (
       <div className="max-w-7xl mx-auto py-12 px-4 text-center">
         <h1 className="text-3xl font-bold text-slate-300 mb-4">Image not found</h1>
-        <Link href="/" className="mt-4 inline-block text-cyan-400 hover:text-cyan-300 transition-colors">
+        <Link href="/" className="mt-4 inline-block text-cyan-400 hover:text-cyan-300">
           ← Back to home
         </Link>
       </div>
@@ -67,7 +69,7 @@ export default async function ImagePage({ params }: Props) {
   return (
     <div className="max-w-7xl mx-auto py-12 px-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="relative rounded-xl overflow-hidden shadow-lg border border-slate-700/30">
+        <div className="relative overflow-hidden rounded-xl shadow-lg border border-slate-700/30">
           <Image
             src={image.largeImageURL}
             alt={image.tags || 'PixelCraft image'}
@@ -111,7 +113,7 @@ export default async function ImagePage({ params }: Props) {
         </div>
       </div>
 
-      <Link href="/" className="mt-8 inline-block text-cyan-400 hover:text-cyan-300 transition-colors">
+      <Link href="/" className="mt-8 inline-block text-cyan-400 hover:text-cyan-300">
         ← Back to home
       </Link>
     </div>

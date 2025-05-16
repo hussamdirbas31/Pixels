@@ -21,7 +21,7 @@ export default async function ImageDetailPage({
           href="/" 
           className="text-cyan-400 hover:text-cyan-300 transition-colors"
         >
-          &larr; Back to gallery
+          &larr; Back to home
         </Link>
       </div>
 

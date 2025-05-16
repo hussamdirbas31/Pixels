@@ -4,11 +4,14 @@ import Link from 'next/link'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import type { Metadata } from 'next'
 
+interface PageProps {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
 export async function generateMetadata({
   params,
-}: {
-  params: { id: string }
-}): Promise<Metadata> {
+}: PageProps): Promise<Metadata> {
   const image = await fetchImageById(params.id)
   
   return {
@@ -27,9 +30,7 @@ export async function generateMetadata({
 
 export default async function ImagePage({
   params,
-}: {
-  params: { id: string }
-}) {
+}: PageProps) {
   const image = await fetchImageById(params.id)
 
   return (
@@ -42,6 +43,7 @@ export default async function ImagePage({
             width={image.imageWidth}
             height={image.imageHeight}
             className="w-full h-auto object-cover"
+            priority
           />
         </div>
         
@@ -52,7 +54,7 @@ export default async function ImagePage({
           
           <div className="flex items-center gap-3">
             <Image
-              src={image.userImageURL}
+              src={image.userImageURL || '/default-avatar.png'}
               alt={image.user}
               width={48}
               height={48}

@@ -3,16 +3,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { fetchImageById, PixabayImage } from '@/utils/pixabay'
 import type { Metadata } from 'next'
-import { fetchImageById } from '@/utils/pixabay'
 
-interface ImagePageProps {
+interface GenerateMetadataProps {
   params: Promise<{ id: string }>
 }
 
-export async function generateMetadata({ params }: ImagePageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
   const { id } = await params
-  const image = await fetchImageById(id)
+  const image: PixabayImage | null = await fetchImageById(id)
 
   if (!image) {
     return {
@@ -22,7 +22,9 @@ export async function generateMetadata({ params }: ImagePageProps): Promise<Meta
   }
 
   const title = image.tags ? `${image.tags} • PixelCraft` : 'PixelCraft Image'
-  const description = image.user ? `Photo by ${image.user}` : 'Discover beautiful images on PixelCraft'
+  const description = image.user
+    ? `Photo by ${image.user}`
+    : 'Discover beautiful images on PixelCraft'
 
   return {
     title,
@@ -42,10 +44,13 @@ export async function generateMetadata({ params }: ImagePageProps): Promise<Meta
   }
 }
 
+interface ImagePageProps {
+  params: Promise<{ id: string }>
+}
+
 export default async function ImagePage({ params }: ImagePageProps) {
   const { id } = await params
-  const image = await fetchImageById(id)
-
+  const image: PixabayImage | null = await fetchImageById(id)
   if (!image) notFound()
 
   return (
@@ -98,13 +103,18 @@ export default async function ImagePage({ params }: ImagePageProps) {
         href="/"
         className="mt-8 inline-block text-cyan-400 hover:text-cyan-300 transition-colors"
       >
-        ← Back
+        ← Back to home
       </Link>
     </main>
   )
 }
 
-function StatItem({ label, value }: { label: string; value?: number }) {
+interface StatItemProps {
+  label: string
+  value?: number
+}
+
+function StatItem({ label, value }: StatItemProps) {
   return (
     <div className="flex items-center gap-2">
       {label} {value ?? 0}

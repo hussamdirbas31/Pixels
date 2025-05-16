@@ -63,7 +63,7 @@ export default async function ImagePage({
           href="/" 
           className="mt-4 inline-block text-cyan-400 hover:text-cyan-300 transition-colors"
         >
-          ← Back to home
+          ← Back
         </Link>
       </div>
     )

@@ -1,3 +1,4 @@
+// app/saved/page.tsx
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -16,10 +17,8 @@ export default function SavedPage() {
       setIsLoading(false)
     }
 
-    // Load immediately
     loadSavedImages()
 
-    // Set up storage event listener for changes from other tabs
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'savedImages') {
         loadSavedImages()
@@ -66,7 +65,7 @@ export default function SavedPage() {
       ) : (
         <div className="text-center py-12">
           <p className="text-xl text-gray-500 dark:text-gray-400">
-            You haven't saved any images yet.
+            You haven&apos;t saved any images yet.
           </p>
         </div>
       )}

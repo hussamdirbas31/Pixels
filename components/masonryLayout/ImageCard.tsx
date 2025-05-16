@@ -3,14 +3,15 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { HeartIcon as HeartOutline, HeartIcon as HeartSolid } from '@heroicons/react/24/outline'
 import { TrashIcon } from '@heroicons/react/24/solid'
-import { Image } from '@/utils/pixabay'
+import { Image as PixabayImage } from '@/utils/pixabay'
 
 interface ImageCardProps {
-  image: Image
+  image: PixabayImage
   isSaved: boolean
-  onToggleSave: (image: Image) => void
+  onToggleSave: (image: PixabayImage) => void
   showRemoveButton?: boolean
   onRemove?: (id: number) => void
 }
@@ -68,11 +69,13 @@ export const ImageCard = ({
               className="w-full relative"
               style={{ paddingBottom: `${aspectRatio}%` }}
             >
-              <img
+              <Image
                 src={image.webformatURL}
                 alt={image.tags}
-                className="absolute inset-0 w-full h-full object-cover"
+                fill
+                className="object-cover"
                 loading="lazy"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
             

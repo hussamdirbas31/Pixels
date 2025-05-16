@@ -1,12 +1,12 @@
+// components/navbar/DesktopNav.tsx
 import Link from 'next/link'
 import SearchBar from './SearchBar'
 
 interface DesktopNavProps {
-  windowWidth: number
   scrolled: boolean
 }
 
-export default function DesktopNav({ windowWidth, scrolled }: DesktopNavProps) {
+export default function DesktopNav({ scrolled }: DesktopNavProps) {
   return (
     <div className="hidden md:flex items-center justify-between w-full">
       <Link 

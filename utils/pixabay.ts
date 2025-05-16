@@ -53,7 +53,7 @@ export async function fetchImages(
 }
 
 
-export async function fetchImageById(id: number): Promise<Image | null> {
+export async function fetchImageById(id: string): Promise<Image | null> {
   try {
     const params = new URLSearchParams({
       key: process.env.NEXT_PUBLIC_PIXABAY_API_KEY!,

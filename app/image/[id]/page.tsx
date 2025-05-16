@@ -4,11 +4,11 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 export default async function ImageDetailPage({
-  params:{id},
+  params,
 }: {
-  params: { id : number }
+  params: { id : string }
 }) {
-  const image = await fetchImageById(id)
+  const image = await fetchImageById(params.id!)
   
   if (!image) {
     return notFound()
@@ -21,7 +21,7 @@ export default async function ImageDetailPage({
           href="/" 
           className="text-cyan-400 hover:text-cyan-300 transition-colors"
         >
-          &larr; Back to home
+          &larr; Back 
         </Link>
       </div>
 

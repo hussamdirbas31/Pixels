@@ -2,12 +2,13 @@ import { fetchImageById } from '@/utils/pixabay'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+type ImagePageParams = {
+  params: {
+    id: string
+  }
+}
+export default async function ImageDetailPage({ params }: ImagePageParams) {
 
-export default async function ImageDetailPage({
-  params,
-}: {
-  params: { id: string }
-}) {
   const image = await fetchImageById(params.id)
   
   if (!image) {

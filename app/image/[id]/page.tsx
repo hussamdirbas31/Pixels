@@ -1,5 +1,4 @@
 // app/image/[id]/page.tsx
-
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -7,11 +6,11 @@ import { fetchImageById, PixabayImage } from '@/utils/pixabay'
 import type { Metadata } from 'next'
 
 interface GenerateMetadataProps {
-  params: Promise<{ id: string }>
+  params: { id: string }
 }
 
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
-  const { id } = await params
+  const { id } = params
   const image: PixabayImage | null = await fetchImageById(id)
 
   if (!image) {
@@ -45,11 +44,11 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
 }
 
 interface ImagePageProps {
-  params: Promise<{ id: string }>
+  params: { id: string }
 }
 
 export default async function ImagePage({ params }: ImagePageProps) {
-  const { id } = await params
+  const { id } = params
   const image: PixabayImage | null = await fetchImageById(id)
   if (!image) notFound()
 

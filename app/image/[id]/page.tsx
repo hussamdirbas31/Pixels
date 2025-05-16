@@ -3,18 +3,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-interface PageProps {
-  params: {
-    id: string
-  }
-}
-export default async function ImageDetailPage({params}:PageProps) {
+export default async function ImageDetailPage({
+  params,
+}: {
+  params: { id: string }
+}) {
   const image = await fetchImageById(params.id)
   
   if (!image) {
     return notFound()
   }
-
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-4">

@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 interface PageProps {
   params: Promise<{
-    slug: string[];
+    id: string;
   }>;
 }
 export default async function ImageDetailPage({ params }: PageProps) {
 
-  const image = await fetchImageById(params.id)
+  const image = await fetchImageById((await params).id)
   
   if (!image) {
     return notFound()

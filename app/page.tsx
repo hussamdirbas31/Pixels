@@ -1,23 +1,28 @@
 // app/page.tsx
 import { Suspense } from 'react'
-import { MasonryLayout } from '@/components/masonryLayout/index'
+import { MasonryLayout } from '@/components/masonryLayout'
 import Filters from '@/components/filter/Filter'
 import Loading from '@/components/loading/Loading'
 import { fetchImages } from '@/utils/pixabay'
 
-export default function Home({
+export interface SearchParams {
+  q?: string
+  category?: string
+}
+
+export default async function Home({
   searchParams
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<SearchParams>
 }) {
-  const searchQuery = searchParams.q?.toString() || ''
-  const category = searchParams.category?.toString() || 'all'
+  // Await the Promise so we can destructure safely
+  const { q: searchQuery = '', category = 'all' } = await searchParams
 
   return (
     <main className="container mx-auto px-4 py-8">
       <Filters currentCategory={category} />
       <Suspense fallback={<Loading />}>
-        <MasonryContent 
+        <MasonryContent
           searchQuery={searchQuery}
           category={category}
         />

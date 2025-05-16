@@ -1,3 +1,4 @@
+// components/ImageCard.tsx
 'use client'
 
 import { motion } from 'framer-motion'

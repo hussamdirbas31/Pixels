@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { MasonryLayout } from '@/components/masonryLayout'
+import { MasonryLayout } from '@/components/masonryLayout/index'
 import { Image } from '@/utils/pixabay'
 import Loading from '@/components/loading/Loading'
 
@@ -10,14 +10,24 @@ export default function SavedPage() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate loading delay for better UX
-    const timer = setTimeout(() => {
+    const loadSavedImages = () => {
       const saved = JSON.parse(localStorage.getItem('savedImages') || '[]')
       setSavedImages(saved)
       setIsLoading(false)
-    }, 500)
+    }
 
-    return () => clearTimeout(timer)
+    // Load immediately
+    loadSavedImages()
+
+    // Set up storage event listener for changes from other tabs
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'savedImages') {
+        loadSavedImages()
+      }
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    return () => window.removeEventListener('storage', handleStorageChange)
   }, [])
 
   const handleRemove = (id: number) => {
@@ -47,9 +57,11 @@ export default function SavedPage() {
 
       {savedImages.length > 0 ? (
         <MasonryLayout 
-          images={savedImages}
+          initialImages={savedImages}
           onImageRemove={handleRemove}
           isSavedPage={true}
+          searchQuery=""
+          category="all"
         />
       ) : (
         <div className="text-center py-12">

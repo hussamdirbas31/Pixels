@@ -1,10 +1,11 @@
-import type { NextConfig } from 'next';
-
-const nextConfig: NextConfig = {
-  reactStrictMode: true,
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
-    domains: ['pixabay.com', 'cdn.pixabay.com'],
+    domains: ['pixabay.com'],
   },
-};
+  experimental: {
+    scrollRestoration: true,
+  },
+}
 
-export default nextConfig;
+module.exports = nextConfig
